@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:rick_and_morty_flutter_app/data/services/episodes_service.dart';
 import 'package:rick_and_morty_flutter_app/ui/home_screen.dart';
 
 void main() {
@@ -17,7 +19,11 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const HomeScreen(),
+      home: Provider<EpisodeService>(
+        create: (BuildContext context ) => EpisodeService.create(),
+        dispose: (_, EpisodeService repository) => repository.client.dispose(),
+        child: const HomeScreen(),
+      ),
     );
   }
 }
