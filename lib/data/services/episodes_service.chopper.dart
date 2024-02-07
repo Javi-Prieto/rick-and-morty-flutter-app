@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'episodes_repository.dart';
+part of 'episodes_service.dart';
 
 // **************************************************************************
 // ChopperGenerator
@@ -8,14 +8,14 @@ part of 'episodes_repository.dart';
 
 // coverage:ignore-file
 // ignore_for_file: type=lint
-final class _$EpisodeRepository extends EpisodeRepository {
-  _$EpisodeRepository([ChopperClient? client]) {
+final class _$EpisodeService extends EpisodeService {
+  _$EpisodeService([ChopperClient? client]) {
     if (client == null) return;
     this.client = client;
   }
 
   @override
-  final Type definitionType = EpisodeRepository;
+  final Type definitionType = EpisodeService;
 
   @override
   Future<Response<dynamic>> fetchEpisodesList() {

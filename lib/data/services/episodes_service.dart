@@ -1,15 +1,15 @@
 import 'package:chopper/chopper.dart';
-part 'episodes_repository.chopper.dart';
+part 'episodes_service.chopper.dart';
 
 @ChopperApi()
-abstract class EpisodeRepository extends ChopperService {
-  static EpisodeRepository create() {
+abstract class EpisodeService extends ChopperService {
+  static EpisodeService create() {
     final client = ChopperClient(
       baseUrl: Uri.parse(
           'https://rickandmortyapi.com/api/'),
-      services: [_$EpisodeRepository()],
+      services: [_$EpisodeService()],
     );
-    return _$EpisodeRepository(client);
+    return _$EpisodeService(client);
   }
 
   @Get(path: 'episode/')

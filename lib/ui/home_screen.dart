@@ -26,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("TMDB"),
+        title: const Text('RICK AND MORTY'),
         centerTitle: true,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),

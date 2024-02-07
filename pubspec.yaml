@@ -39,6 +39,8 @@ dependencies:
   provider: ^6.1.1
   chopper: ^7.1.1
   chopper_generator: ^7.1.1
+  meta: ^1.10.0
+  bloc: ^8.1.2
 
 dev_dependencies:
   flutter_test:

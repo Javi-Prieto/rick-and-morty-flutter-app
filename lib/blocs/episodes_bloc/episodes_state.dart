@@ -3,6 +3,7 @@ part of 'episodes_bloc.dart';
 @immutable
 sealed class EpisodesState {
   final List<Result> episodes;
+
   const EpisodesState({
     this.episodes = const <Result>[],
   }); 
@@ -11,8 +12,8 @@ sealed class EpisodesState {
 final class EpisodesInitial extends EpisodesState {}
 
 final class EpisodesFetched extends EpisodesState {
-  final List<Result> episodes;
-  const EpisodesFetched(this.episodes);
+  final List<Result> episodeList;
+  const EpisodesFetched(this.episodeList);
 }
 
 final class EpisodesFetchError extends EpisodesState {

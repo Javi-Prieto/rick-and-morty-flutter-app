@@ -5,7 +5,7 @@ class Result {
   String? name;
   String? airDate;
   String? episode;
-  List<String>? characters;
+  List<dynamic>? characters;
   String? url;
   DateTime? created;
 
@@ -24,7 +24,7 @@ class Result {
         name: data['name'] as String?,
         airDate: data['air_date'] as String?,
         episode: data['episode'] as String?,
-        characters: data['characters'] as List<String>?,
+        characters: data['characters'] as List<dynamic>?,
         url: data['url'] as String?,
         created: data['created'] == null
             ? null
