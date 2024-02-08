@@ -20,3 +20,8 @@ final class EpisodesFetchError extends EpisodesState {
   final String messageError;
   const EpisodesFetchError(this.messageError);
 }
+
+final class EpisodesDetailClick extends EpisodesState {
+  final int episodeId;
+  const EpisodesDetailClick(this.episodeId);
+}

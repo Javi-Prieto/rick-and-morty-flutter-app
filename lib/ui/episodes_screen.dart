@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:rick_and_morty_flutter_app/blocs/episodes_bloc/episodes_bloc.dart';
 import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository.dart';
 import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository_impl.dart';
 import 'package:rick_and_morty_flutter_app/data/services/episodes_service.dart';
 import 'package:rick_and_morty_flutter_app/widgets/episodes_list_item.dart';
+
 
 
 class EpisodeScreen extends StatefulWidget {
@@ -16,24 +16,24 @@ class EpisodeScreen extends StatefulWidget {
 }
 
 class _EpisodeScreenState extends State<EpisodeScreen> {
-  EpisodeRepository episodeRepository = EpisodesRespositoryImpl(episodeService: EpisodeService.create());
-
+  EpisodeRepository episodeRepository =
+      EpisodesRespositoryImpl(episodeService: EpisodeService.create());
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    super.initState();
+    EpisodesBloc(episodeRepository).add(EpisodesFetchEvent());
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-          create: (context) {
-            return EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent());
-          },
-          child: Container(
-            child: _episodeView(context),
-          )
-    );
+        create: (context) {
+          return EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent());
+        },
+        child: Container(
+          child: _episodeView(context),
+        ));
   }
 
   Widget _episodeView(BuildContext context) {
@@ -54,7 +54,9 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
             ],
           );
         } else if (state is EpisodesFetched) {
-          return EpisodeListItem(episodes: state.episodeList,);
+          return EpisodeListItem(
+            episodes: state.episodeList,
+          );
         } else {
           return const Text('Not support');
         }
