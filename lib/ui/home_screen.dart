@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty_flutter_app/ui/character_screen.dart';
 import 'package:rick_and_morty_flutter_app/ui/episodes_screen.dart';
+import 'package:rick_and_morty_flutter_app/widgets/chracaters_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -24,9 +25,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-     return Scaffold(
+    return Scaffold(
       appBar: AppBar(
-        title: const Text("TMDB"),
+        title: const Text('RICK AND MORTY'),
         centerTitle: true,
       ),
       body: _widgetOptions.elementAt(_selectedIndex),
