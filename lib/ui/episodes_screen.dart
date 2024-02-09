@@ -38,6 +38,9 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
 
   Widget _episodeView(BuildContext context) {
     return BlocBuilder<EpisodesBloc, EpisodesState>(
+      buildWhen: (previous, current) {
+        return current is !EpisodesDetailClick;
+      },
       builder: (context, state) {
         if (state is EpisodesInitial) {
           return const Center(child: CircularProgressIndicator());
