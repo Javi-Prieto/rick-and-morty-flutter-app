@@ -13,7 +13,7 @@ class CharacterScreen extends StatefulWidget {
 }
 
 class _CharacterScreenState extends State<CharacterScreen> {
-  late PersonajesRespositoryImpl personajeRepositori;
+  late PersonajeRepositori personajeRepositori;
 
   @override
   void initState() {
@@ -39,12 +39,13 @@ class _CharacterScreenState extends State<CharacterScreen> {
     return BlocBuilder<PersonajesBloc, PersonajesState>(
         builder: (context, state) {
       if (state is PersonajesFeatchSucces) {
-        return ListView.builder(
-            itemCount: state.list.length,
+        return GridView.builder(
+            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2, childAspectRatio: 0.7, mainAxisSpacing: 5.0),
+            itemCount: state.personajesList.length,
             itemBuilder: (context, index) {
-              return ListTile(
-                title: Text(state.list[index].name!),
-              );
+              final l = state.personajesList[index];
+              return PersonajeWidget(list: l);
             });
       } else if (state is PersonajesFetchError) {
         return Text(state.errorDeMensaje);

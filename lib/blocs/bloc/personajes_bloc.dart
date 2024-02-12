@@ -10,10 +10,10 @@ part 'personajes_state.dart';
 class PersonajesBloc extends Bloc<PersonajesEvent, PersonajesState> {
   final PersonajeRepositori personajeRepositori;
   PersonajesBloc(this.personajeRepositori) : super(PersonajesInitial()) {
-    on<PersonajesEvent>(_onPersonajesFetchPopular);
+    on<PersonajeFetchList>(_onPersonajesFetchPopular);
   }
   void _onPersonajesFetchPopular(
-      PersonajesEvent event, Emitter<PersonajesState> emit) async {
+      PersonajeFetchList event, Emitter<PersonajesState> emit) async {
     try {
       final personajesList = await personajeRepositori.fetchPersonajes();
       emit(PersonajesFeatchSucces(personajesList));

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:rick_and_morty_flutter_app/models/listPersonajes/lista_personajes_response/lista_personajes_response.dart';
 import 'package:rick_and_morty_flutter_app/models/listPersonajes/lista_personajes_response/result.dart';
 import 'package:rick_and_morty_flutter_app/repositories/personajes_repository.dart';
@@ -13,8 +11,7 @@ class PersonajesRespositoryImpl extends PersonajeRepositori {
     final response = await _client
         .get(Uri.parse('https://rickandmortyapi.com/api/character'));
     if (response.statusCode == 200) {
-      return ListaPersonajesResponse.fromJson(json.decode(response.body))
-          .results!;
+      return ListaPersonajesResponse.fromJson(response.body).results!;
     } else {
       throw UnimplementedError('Fail to load personajes');
     }
