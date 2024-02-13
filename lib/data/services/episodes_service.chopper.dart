@@ -27,4 +27,15 @@ final class _$EpisodeService extends EpisodeService {
     );
     return client.send<dynamic, dynamic>($request);
   }
+
+  @override
+  Future<Response<dynamic>> fetchEpisodeDetail(int id) {
+    final Uri $url = Uri.parse('episode/${id}');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
 }

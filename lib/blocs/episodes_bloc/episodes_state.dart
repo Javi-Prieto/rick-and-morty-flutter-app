@@ -6,7 +6,7 @@ sealed class EpisodesState {
 
   const EpisodesState({
     this.episodes = const <Result>[],
-  }); 
+  });
 }
 
 final class EpisodesInitial extends EpisodesState {}

@@ -6,8 +6,6 @@ import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository
 import 'package:rick_and_morty_flutter_app/data/services/episodes_service.dart';
 import 'package:rick_and_morty_flutter_app/widgets/episodes_list_item.dart';
 
-
-
 class EpisodeScreen extends StatefulWidget {
   const EpisodeScreen({super.key});
 
@@ -39,7 +37,7 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
   Widget _episodeView(BuildContext context) {
     return BlocBuilder<EpisodesBloc, EpisodesState>(
       buildWhen: (previous, current) {
-        return current is !EpisodesDetailClick;
+        return current is! EpisodesDetailClick;
       },
       builder: (context, state) {
         if (state is EpisodesInitial) {
