@@ -5,8 +5,7 @@ part 'episodes_service.chopper.dart';
 abstract class EpisodeService extends ChopperService {
   static EpisodeService create() {
     final client = ChopperClient(
-      baseUrl: Uri.parse(
-          'https://rickandmortyapi.com/api/'),
+      baseUrl: Uri.parse('https://rickandmortyapi.com/api/'),
       services: [_$EpisodeService()],
     );
     return _$EpisodeService(client);
@@ -14,4 +13,7 @@ abstract class EpisodeService extends ChopperService {
 
   @Get(path: 'episode/')
   Future<Response> fetchEpisodesList();
+
+  @Get(path: 'episode/{id}')
+  Future<Response> fetchEpisodeDetail(@Path() int id);
 }

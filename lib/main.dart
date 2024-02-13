@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
       ),
       home: Provider<EpisodeService>(
-        create: (BuildContext context ) => EpisodeService.create(),
+        create: (BuildContext context) => EpisodeService.create(),
         dispose: (_, EpisodeService repository) => repository.client.dispose(),
         child: const HomeScreen(),
       ),

@@ -10,6 +10,7 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
   final EpisodeRepository episodeRepository;
   EpisodesBloc(this.episodeRepository) : super(EpisodesInitial()) {
     on<EpisodesFetchEvent>(_onEpisodesFetch);
+    on<EpisodesGoDetailEvent>(_onEpisodeClick);
   }
 
   void _onEpisodesFetch(
@@ -18,7 +19,17 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
       final episodesResponse = await episodeRepository.fetchEpisodesList();
       emit(EpisodesFetched(episodesResponse));
       return;
-    } on Exception catch (e){
+    } on Exception catch (e) {
+      emit(EpisodesFetchError(e.toString()));
+    }
+  }
+
+  void _onEpisodeClick(
+      EpisodesGoDetailEvent event, Emitter<EpisodesState> emit) {
+    try {
+      emit(EpisodesDetailClick(event.episodeId));
+      return;
+    } on Exception catch (e) {
       emit(EpisodesFetchError(e.toString()));
     }
   }

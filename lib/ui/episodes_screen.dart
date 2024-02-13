@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 import 'package:rick_and_morty_flutter_app/blocs/episodes_bloc/episodes_bloc.dart';
 import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository.dart';
 import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository_impl.dart';
@@ -19,8 +18,9 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
       EpisodesRespositoryImpl(episodeService: EpisodeService.create());
 
   @override
-  void dispose() {
-    super.dispose();
+  void initState() {
+    super.initState();
+    EpisodesBloc(episodeRepository).add(EpisodesFetchEvent());
   }
 
   @override
@@ -30,12 +30,15 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
           return EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent());
         },
         child: Container(
-          child: _episodeView(),
+          child: _episodeView(context),
         ));
   }
 
-  Widget _episodeView() {
+  Widget _episodeView(BuildContext context) {
     return BlocBuilder<EpisodesBloc, EpisodesState>(
+      buildWhen: (previous, current) {
+        return current is! EpisodesDetailClick;
+      },
       builder: (context, state) {
         if (state is EpisodesInitial) {
           return const Center(child: CircularProgressIndicator());
@@ -62,3 +65,4 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
     );
   }
 }
+
