@@ -41,7 +41,7 @@ class _CharacterScreenState extends State<CharacterScreen> {
       if (state is PersonajesFeatchSucces) {
         return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2, childAspectRatio: 0.7, mainAxisSpacing: 5.0),
+                crossAxisCount: 1, childAspectRatio: 0.7, mainAxisSpacing: 5.0),
             itemCount: state.personajesList.length,
             itemBuilder: (context, index) {
               final l = state.personajesList[index];
