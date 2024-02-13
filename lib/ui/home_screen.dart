@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rick_and_morty_flutter_app/ui/character_screen.dart';
 import 'package:rick_and_morty_flutter_app/ui/episodes_screen.dart';
+import 'package:rick_and_morty_flutter_app/widgets/chracaters_list_item.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

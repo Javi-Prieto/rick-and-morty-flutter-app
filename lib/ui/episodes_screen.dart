@@ -7,7 +7,6 @@ import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository
 import 'package:rick_and_morty_flutter_app/data/services/episodes_service.dart';
 import 'package:rick_and_morty_flutter_app/widgets/episodes_list_item.dart';
 
-
 class EpisodeScreen extends StatefulWidget {
   const EpisodeScreen({super.key});
 
@@ -16,8 +15,8 @@ class EpisodeScreen extends StatefulWidget {
 }
 
 class _EpisodeScreenState extends State<EpisodeScreen> {
-  EpisodeRepository episodeRepository = EpisodesRespositoryImpl(episodeService: EpisodeService.create());
-
+  EpisodeRepository episodeRepository =
+      EpisodesRespositoryImpl(episodeService: EpisodeService.create());
 
   @override
   void dispose() {
@@ -27,16 +26,15 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-          create: (context) {
-            return EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent());
-          },
-          child: Container(
-            child: _episodeView(context),
-          )
-    );
+        create: (context) {
+          return EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent());
+        },
+        child: Container(
+          child: _episodeView(),
+        ));
   }
 
-  Widget _episodeView(BuildContext context) {
+  Widget _episodeView() {
     return BlocBuilder<EpisodesBloc, EpisodesState>(
       builder: (context, state) {
         if (state is EpisodesInitial) {
@@ -54,7 +52,9 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
             ],
           );
         } else if (state is EpisodesFetched) {
-          return EpisodeListItem(episodes: state.episodeList,);
+          return EpisodeListItem(
+            episodes: state.episodeList,
+          );
         } else {
           return const Text('Not support');
         }
