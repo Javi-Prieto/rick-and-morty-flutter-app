@@ -16,22 +16,32 @@ class EpisodeScreen extends StatefulWidget {
 class _EpisodeScreenState extends State<EpisodeScreen> {
   EpisodeRepository episodeRepository =
       EpisodesRespositoryImpl(episodeService: EpisodeService.create());
-
+  String title = 'Season 1';
   @override
   void initState() {
     super.initState();
-    EpisodesBloc(episodeRepository).add(EpisodesFetchEvent());
+    EpisodesBloc(episodeRepository).add(EpisodesFetchEvent(season: 1));
   }
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
         create: (context) {
-          return EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent());
+          return EpisodesBloc(episodeRepository)
+            ..add(EpisodesFetchEvent(season: 1));
         },
-        child: Container(
-          child: _episodeView(context),
-        ));
+        child: Scaffold(
+            appBar: AppBar(
+              title: Text('Episodes $title'),
+              actions: [
+                IconButton(
+                    onPressed: () {
+                      _showBottomSheet(context);
+                    },
+                    icon: const Icon(Icons.filter_list))
+              ],
+            ),
+            body: _episodeView(context)));
   }
 
   Widget _episodeView(BuildContext context) {
@@ -48,7 +58,9 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
               Text(state.messageError),
               ElevatedButton(
                 onPressed: () {
-                  context.watch<EpisodesBloc>().add(EpisodesFetchEvent());
+                  context
+                      .watch<EpisodesBloc>()
+                      .add(EpisodesFetchEvent(season: 1));
                 },
                 child: const Text('Retry'),
               )
@@ -64,5 +76,101 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
       },
     );
   }
-}
 
+  void _showBottomSheet(BuildContext context) {
+    showModalBottomSheet<void>(
+      context: context,
+      builder: (BuildContext context) {
+        return SizedBox(
+          height: 200,
+          child: Center(
+            child: ListView(
+              children: [
+                ListTile(
+                  title: const Row(
+                    children: [
+                      Icon(Icons.one_k_plus_outlined),
+                      Text('Season 1'),
+                    ],
+                  ),
+                  onTap: () {
+                    EpisodesBloc(episodeRepository)
+                        .add(EpisodesFetchEvent(season: 1));
+                    setState(() {
+                      title = 'Season 1';
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Row(
+                    children: [
+                      Icon(Icons.two_k_plus_outlined),
+                      Text('Season 2'),
+                    ],
+                  ),
+                  onTap: () {
+                    EpisodesBloc(episodeRepository)
+                        .add(EpisodesFetchEvent(season: 2));
+                    setState(() {
+                      title = 'Season 2';
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Row(
+                    children: [
+                      Icon(Icons.three_k_plus_outlined),
+                      Text('Season 3'),
+                    ],
+                  ),
+                  onTap: () {
+                    EpisodesBloc(episodeRepository)
+                        .add(EpisodesFetchEvent(season: 3));
+                    setState(() {
+                      title = 'Season 3';
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Row(
+                    children: [
+                      Icon(Icons.four_k_plus_outlined),
+                      Text('Season 4'),
+                    ],
+                  ),
+                  onTap: () {
+                    EpisodesBloc(episodeRepository)
+                        .add(EpisodesFetchEvent(season: 1));
+                    setState(() {
+                      title = 'Season 4';
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+                ListTile(
+                  title: const Row(
+                    children: [
+                      Icon(Icons.five_k_plus_outlined),
+                      Text('Season 5'),
+                    ],
+                  ),
+                  onTap: () {
+                    EpisodesBloc(episodeRepository)
+                        .add(EpisodesFetchEvent(season: 5));
+                    setState(() {
+                      title = 'Season 5';
+                    });
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}

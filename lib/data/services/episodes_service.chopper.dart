@@ -19,7 +19,29 @@ final class _$EpisodeService extends EpisodeService {
 
   @override
   Future<Response<dynamic>> fetchEpisodesList() {
-    final Uri $url = Uri.parse('episode/');
+    final Uri $url = Uri.parse('episode?page=1');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> fetchEpisodesListP2() {
+    final Uri $url = Uri.parse('episode?page=2');
+    final Request $request = Request(
+      'GET',
+      $url,
+      client.baseUrl,
+    );
+    return client.send<dynamic, dynamic>($request);
+  }
+
+  @override
+  Future<Response<dynamic>> fetchEpisodesListP3() {
+    final Uri $url = Uri.parse('episode?page=3');
     final Request $request = Request(
       'GET',
       $url,

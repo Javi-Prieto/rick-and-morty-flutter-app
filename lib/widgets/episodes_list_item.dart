@@ -2,9 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty_flutter_app/blocs/episodes_bloc/episodes_bloc.dart';
-import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository.dart';
-import 'package:rick_and_morty_flutter_app/data/repositories/episodes_repository_impl.dart';
-import 'package:rick_and_morty_flutter_app/data/services/episodes_service.dart';
 import 'package:rick_and_morty_flutter_app/models/episodes_response/result.dart';
 import 'package:rick_and_morty_flutter_app/ui/episode_detail_screen.dart';
 
@@ -20,8 +17,6 @@ class EpisodeListItem extends StatelessWidget {
   }
 
   Widget _episodeDetails(BuildContext context) {
-    EpisodeRepository episodeRepository =
-        EpisodesRespositoryImpl(episodeService: EpisodeService.create());
     return BlocListener<EpisodesBloc, EpisodesState>(
       listener: (context, state) {
         if (state is EpisodesDetailClick) {
@@ -29,9 +24,7 @@ class EpisodeListItem extends StatelessWidget {
               context,
               CupertinoPageRoute(
                   builder: (context) =>
-                      EpisodeDetailScreen(episodeId: state.episodeId))).then(
-              (value) =>
-                  {EpisodesBloc(episodeRepository).add(EpisodesFetchEvent())});
+                      EpisodeDetailScreen(episodeId: state.episodeId)));
         }
       },
       child: ListView.builder(

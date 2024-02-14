@@ -16,7 +16,8 @@ class EpisodesBloc extends Bloc<EpisodesEvent, EpisodesState> {
   void _onEpisodesFetch(
       EpisodesFetchEvent event, Emitter<EpisodesState> emit) async {
     try {
-      final episodesResponse = await episodeRepository.fetchEpisodesList();
+      final episodesResponse =
+          await episodeRepository.fetchEpisodesList(event.season);
       emit(EpisodesFetched(episodesResponse));
       return;
     } on Exception catch (e) {
