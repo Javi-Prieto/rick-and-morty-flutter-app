@@ -22,4 +22,14 @@ class PersonajesBloc extends Bloc<PersonajesEvent, PersonajesState> {
       emit(PersonajesFetchError(e.toString()));
     }
   }
+
+  void _onPersonajeClick(
+      PersonajeDetalles event, Emitter<PersonajesState> emit) {
+    try {
+      emit(PersonajeDetallesClick(event.personajeId));
+      return;
+    } on Exception catch (e) {
+      emit(PersonajesFetchError(e.toString()));
+    }
+  }
 }

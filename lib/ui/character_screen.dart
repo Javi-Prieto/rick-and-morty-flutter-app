@@ -25,19 +25,21 @@ class _CharacterScreenState extends State<CharacterScreen> {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) =>
-          PersonajesBloc(personajeRepositori)..add(PersonajeFetchList()),
+          PersonajesBloc(personajeRepositori)..add(PersonajeFetchEvents()),
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Lista Personajes"),
         ),
-        body: _PersonajeList(),
+        body: _PersonajeList(context),
       ),
     );
   }
 
-  Widget _PersonajeList() {
+  Widget _PersonajeList(BuildContext context) {
     return BlocBuilder<PersonajesBloc, PersonajesState>(
-        builder: (context, state) {
+        buildWhen: (previous, current) {
+      return current is! PersonajeDetallesClick;
+    }, builder: (context, state) {
       if (state is PersonajesFeatchSucces) {
         return GridView.builder(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
