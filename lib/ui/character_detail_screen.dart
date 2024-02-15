@@ -17,7 +17,6 @@ class _CharacterScreenDetailsState extends State<CharacterScreenDetails> {
   @override
   void initState() {
     super.initState();
-    // Envía el evento para cargar los detalles del personaje al BLoC
     context.read<PersonajeDetailsBlocBloc>().add(
           PersonajeDetailsFetchEvent(personajeId: widget.personajeId),
         );
@@ -37,7 +36,61 @@ class _CharacterScreenDetailsState extends State<CharacterScreenDetails> {
             );
           } else if (state is PersonajeDetailFetched) {
             final personaje = state.personaje;
-            return Text(personaje.name!);
+            return ListView(
+              children: <Widget>[
+                Center(
+                  child: Card(
+                    margin: EdgeInsets.all(8.0),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            'Nombre: ${personaje.name}',
+                            style: TextStyle(
+                                fontSize: 18, fontWeight: FontWeight.bold),
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: 10),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: <Widget>[
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('Estado: ${personaje.status}'),
+                                  Text('Especie: ${personaje.species}'),
+                                  Text(
+                                      'Ubicación: ${personaje.location?.name}'),
+                                ],
+                              ),
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Text('Tipo: ${personaje.type}'),
+                                  Text('Género: ${personaje.gender}'),
+                                  Text('Origen: ${personaje.origin?.name}'),
+                                ],
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: 10),
+                          personaje.image != null
+                              ? Image.network(personaje.image!)
+                              : Container(),
+                          SizedBox(height: 10),
+                          Text('Episodios: ${personaje.episode?.length ?? 0}'),
+                          Text('URL: ${personaje.url}'),
+                          Text(
+                              'Creado: ${personaje.created?.toIso8601String()}'),
+                        ],
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
           } else if (state is PersonajeDetailsFetchError) {
             return Center(
               child: Text(
