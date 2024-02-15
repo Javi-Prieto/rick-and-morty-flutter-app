@@ -17,19 +17,17 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
   EpisodeRepository episodeRepository =
       EpisodesRespositoryImpl(episodeService: EpisodeService.create());
   String title = 'Season 1';
+  late EpisodesBloc _episodesBloc; 
   @override
   void initState() {
     super.initState();
-    EpisodesBloc(episodeRepository).add(EpisodesFetchEvent(season: 1));
+    _episodesBloc = EpisodesBloc(episodeRepository)..add(EpisodesFetchEvent(season: 1));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) {
-          return EpisodesBloc(episodeRepository)
-            ..add(EpisodesFetchEvent(season: 1));
-        },
+    return BlocProvider.value(
+        value: _episodesBloc,
         child: Scaffold(
             appBar: AppBar(
               title: Text('Episodes $title'),
@@ -94,8 +92,7 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
                     ],
                   ),
                   onTap: () {
-                    EpisodesBloc(episodeRepository)
-                        .add(EpisodesFetchEvent(season: 1));
+                    _episodesBloc.add(EpisodesFetchEvent(season: 1));
                     setState(() {
                       title = 'Season 1';
                     });
@@ -110,8 +107,7 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
                     ],
                   ),
                   onTap: () {
-                    EpisodesBloc(episodeRepository)
-                        .add(EpisodesFetchEvent(season: 2));
+                    _episodesBloc.add(EpisodesFetchEvent(season: 2));
                     setState(() {
                       title = 'Season 2';
                     });
@@ -126,8 +122,7 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
                     ],
                   ),
                   onTap: () {
-                    EpisodesBloc(episodeRepository)
-                        .add(EpisodesFetchEvent(season: 3));
+                    _episodesBloc.add(EpisodesFetchEvent(season: 3));
                     setState(() {
                       title = 'Season 3';
                     });
@@ -142,8 +137,7 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
                     ],
                   ),
                   onTap: () {
-                    EpisodesBloc(episodeRepository)
-                        .add(EpisodesFetchEvent(season: 1));
+                    _episodesBloc.add(EpisodesFetchEvent(season: 4));
                     setState(() {
                       title = 'Season 4';
                     });
@@ -158,8 +152,7 @@ class _EpisodeScreenState extends State<EpisodeScreen> {
                     ],
                   ),
                   onTap: () {
-                    EpisodesBloc(episodeRepository)
-                        .add(EpisodesFetchEvent(season: 5));
+                    _episodesBloc.add(EpisodesFetchEvent(season: 5));
                     setState(() {
                       title = 'Season 5';
                     });
