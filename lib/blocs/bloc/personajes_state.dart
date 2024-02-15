@@ -19,3 +19,8 @@ final class PersonajesFetchError extends PersonajesState {
   final String errorDeMensaje;
   const PersonajesFetchError(this.errorDeMensaje);
 }
+
+final class PersonajeDetallesClick extends PersonajesState {
+  final int personajeId;
+  const PersonajeDetallesClick(this.personajeId);
+}
