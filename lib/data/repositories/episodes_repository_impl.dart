@@ -10,26 +10,127 @@ class EpisodesRespositoryImpl implements EpisodeRepository {
   EpisodesRespositoryImpl({required this.episodeService});
 
   @override
-  Future<List<Result>> fetchEpisodesList() async {
-    final episodeResponse = await episodeService.fetchEpisodesList();
-    if (episodeResponse.isSuccessful) {
-      final episodeBody = episodeResponse.body!.toString();
-      final episodeList = EpisodesResponse.fromJson(episodeBody).results!;
-      return episodeList;
-    } else {
-      throw (Exception(episodeResponse.error.toString()));
+  Future<List<Result>> fetchEpisodesList(int season) async {
+    switch (season) {
+      case 1:
+        {
+          final episodeResponse = await episodeService.fetchEpisodesList();
+          if (episodeResponse.isSuccessful) {
+            final episodeBody = episodeResponse.body!.toString();
+            final episodeList = EpisodesResponse.fromJson(episodeBody).results!;
+            final List<Result> toReturn = [];
+            for (var episode in episodeList) {
+              int i = 0;
+              if (episode.episode!.startsWith('S01')) {
+                toReturn.insert(i, episode);
+                i++;
+              }
+            }
+            return toReturn;
+          } else {
+            throw (Exception(episodeResponse.error.toString()));
+          }
+        }
+      case 2:
+        {
+          final episodeResponse = await episodeService.fetchEpisodesList();
+          final episodeResponse2 = await episodeService.fetchEpisodesListP2();
+          if (episodeResponse.isSuccessful && episodeResponse2.isSuccessful) {
+            final episodeBody = episodeResponse.body!.toString();
+            final episodeList = EpisodesResponse.fromJson(episodeBody).results!;
+            final episodeList2 =
+                EpisodesResponse.fromJson(episodeResponse2.body!.toString())
+                    .results!;
+            final List<Result> toReturn = [];
+            for (var episode in episodeList) {
+              if (episode.episode!.startsWith('S02')) {
+                toReturn.add(episode);
+              }
+            }
+            for (var episode in episodeList2) {
+              if (episode.episode!.startsWith('S02')) {
+                toReturn.add(episode);
+              }
+            }
+            return toReturn;
+          } else {
+            throw (Exception(episodeResponse.error.toString()));
+          }
+        }
+      case 3:
+        {
+          final episodeResponse = await episodeService.fetchEpisodesListP2();
+          if (episodeResponse.isSuccessful) {
+            final episodeBody = episodeResponse.body!.toString();
+            final episodeList = EpisodesResponse.fromJson(episodeBody).results!;
+            final List<Result> toReturn = [];
+            for (var episode in episodeList) {
+              if (episode.episode!.startsWith('S03')) {
+                toReturn.add(episode);
+              }
+            }
+            return toReturn;
+          } else {
+            throw (Exception(episodeResponse.error.toString()));
+          }
+        }
+      case 4:
+        {
+          final episodeResponse = await episodeService.fetchEpisodesListP2();
+          final episodeResponse2 = await episodeService.fetchEpisodesListP3();
+          if (episodeResponse.isSuccessful && episodeResponse2.isSuccessful) {
+            final episodeBody = episodeResponse.body!.toString();
+            final episodeList = EpisodesResponse.fromJson(episodeBody).results!;
+            final episodeList2 =
+                EpisodesResponse.fromJson(episodeResponse2.body!.toString())
+                    .results!;
+            final List<Result> toReturn = [];
+            for (var episode in episodeList) {
+              if (episode.episode!.startsWith('S04')) {
+                toReturn.add(episode);
+              }
+            }
+            for (var episode in episodeList2) {
+              if (episode.episode!.startsWith('S04')) {
+                toReturn.add(episode);
+              }
+            }
+            return toReturn;
+          } else {
+            throw (Exception(episodeResponse.error.toString()));
+          }
+        }
+      case 5:
+        {
+          final episodeResponse = await episodeService.fetchEpisodesListP3();
+          if (episodeResponse.isSuccessful) {
+            final episodeBody = episodeResponse.body!.toString();
+            final episodeList = EpisodesResponse.fromJson(episodeBody).results!;
+            final List<Result> toReturn = [];
+            for (var episode in episodeList) {
+              if (episode.episode!.startsWith('S05')) {
+                toReturn.add(episode);
+              }
+            }
+            return toReturn;
+          } else {
+            throw (Exception(episodeResponse.error.toString()));
+          }
+        }
     }
+    throw (Exception('Unable to find this season'));
   }
 
   @override
   Future<EpisodeDetailResponse> fetchEpisodeDetailResponse(int id) async {
     final episodeResponse = await episodeService.fetchEpisodeDetail(id);
 
-    if(episodeResponse.isSuccessful){
-      final toReturn = EpisodeDetailResponse.fromJson(episodeResponse.body!.toString());
+    if (episodeResponse.isSuccessful) {
+      final toReturn =
+          EpisodeDetailResponse.fromJson(episodeResponse.body!.toString());
       return toReturn;
-    }else{
-      throw(Exception(episodeResponse.error.toString()));
+    } else {
+      throw (Exception(episodeResponse.error.toString()));
     }
   }
 }
