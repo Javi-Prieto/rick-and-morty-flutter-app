@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 import 'package:rick_and_morty_flutter_app/models/listPersonajes/lista_personajes_response/result.dart';
@@ -13,7 +15,7 @@ class PersonajeDetailsBlocBloc
       : super(PersonajeDetailsBlocInitial()) {
     on<PersonajeDetailsBlocEvent>(_onPersonajeDetailsFetch);
   }
-  void _onPersonajeDetailsFetch(PersonajeDetailsFetchEvent event,
+  void _onPersonajeDetailsFetch(PersonajeDetailsBlocEvent event,
       Emitter<PersonajeDetailsBlocState> emit) async {
     try {
       final personajeDetailsResponse =
