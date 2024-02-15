@@ -1,75 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rick_and_morty_flutter_app/blocs/bloc/personaje_details_bloc_bloc.dart';
-import 'package:rick_and_morty_flutter_app/blocs/bloc/personajes_bloc.dart';
-import 'package:rick_and_morty_flutter_app/repositories/personajes_repository.dart';
-import 'package:rick_and_morty_flutter_app/repositories/personajes_reposritory_impl.dart';
+import 'package:rick_and_morty_flutter_app/models/listPersonajes/lista_personajes_response/result.dart';
 
-class CharacterScreenDetails extends StatelessWidget {
+class CharacterScreenDetails extends StatefulWidget {
   final int personajeId;
-  const CharacterScreenDetails({super.key, required this.personajeId});
+
+  const CharacterScreenDetails({Key? key, required this.personajeId})
+      : super(key: key);
+
+  @override
+  _CharacterScreenDetailsState createState() => _CharacterScreenDetailsState();
+}
+
+class _CharacterScreenDetailsState extends State<CharacterScreenDetails> {
+  @override
+  void initState() {
+    super.initState();
+    // Envía el evento para cargar los detalles del personaje al BLoC
+    context.read<PersonajeDetailsBlocBloc>().add(
+          PersonajeDetailsFetchEvent(personajeId: widget.personajeId),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
-    PersonajeRepositori personajeRepositori = PersonajesRespositoryImpl();
-    return BlocProvider(
-      create: (context) =>
-          PersonajesBloc(personajeRepositori)..add(PersonajeFetchEvents()),
-      child: Container(child: _CharacterDetails(context)),
-    );
-  }
-
-  Widget _CharacterDetails(BuildContext context) {
-    return BlocBuilder<PersonajeDetailsBlocBloc, PersonajeDetailsBlocState>(
-      buildWhen: (previous, current) {
-        return current is PersonajeDetailsBlocInitial ||
-            current is PersonajeDetailsBlocEvent ||
-            current is PersonajeDetailsFetchError;
-      },
-      builder: (context, state) {
-        if (state is PersonajeDetailsBlocInitial) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (state is PersonajeDetailsFetchError) {
-          return Column(
-            children: [
-              Text(state.mensajeError),
-              ElevatedButton(
-                onPressed: () {
-                  context.watch<PersonajeDetailsBlocBloc>().add(
-                      PersonajeDetailsFetchEvent(personajeId: personajeId));
-                },
-                child: const Text("Retry"),
-              )
-            ],
-          );
-        } else if (state is PersonajeDetailFetched) {
-          return Scaffold(
-            appBar: AppBar(
-              leading: InkWell(
-                onTap: () {
-                  Navigator.pop(context);
-                },
-                child: const Icon(Icons.arrow_back),
-              ),
-              title: Text(state.personaje.name!),
-              centerTitle: true,
-            ),
-            body: Column(
-              children: [
-                const Divider(),
-                const Text(
-                  'Created At',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                  textAlign: TextAlign.center,
-                ),
-                Text(state.personaje.gender!)
-              ],
-            ),
-          );
-        } else {
-          return const Text('No support');
-        }
-      },
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Detalles del Personaje'),
+      ),
+      body: BlocBuilder<PersonajeDetailsBlocBloc, PersonajeDetailsBlocState>(
+        builder: (context, state) {
+          if (state is PersonajeDetailsBlocInitial) {
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          } else if (state is PersonajeDetailFetched) {
+            final personaje = state.personaje;
+            return Text(personaje.name!);
+          } else if (state is PersonajeDetailsFetchError) {
+            return Center(
+              child: Text(
+                  'Error al cargar los detalles del personaje: ${state.mensajeError}'),
+            );
+          } else {
+            return Center(
+              child: Text('Estado de bloc desconocido.'),
+            );
+          }
+        },
+      ),
     );
   }
 }

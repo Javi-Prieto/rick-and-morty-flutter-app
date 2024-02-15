@@ -20,9 +20,10 @@ class PersonajeDetailsBlocBloc
     try {
       final personajeDetailsResponse =
           await personajeRepositori.fecthPersonajesDetails(event.personajeId);
+      print('Personaje details fetched: ${personajeDetailsResponse.toJson()}');
       emit(PersonajeDetailFetched(personajeDetailsResponse));
       return;
-    } on Exception catch (e) {
+    } catch (e) {
       emit(PersonajeDetailsFetchError(e.toString()));
     }
   }

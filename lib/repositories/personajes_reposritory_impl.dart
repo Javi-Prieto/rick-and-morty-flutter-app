@@ -18,8 +18,13 @@ class PersonajesRespositoryImpl extends PersonajeRepositori {
   }
 
   @override
-  Future<Result> fecthPersonajesDetails(int personajesId) {
-    // TODO: implement fecthPersonajesDetails
-    throw UnimplementedError();
+  Future<Result> fecthPersonajesDetails(int personajesId) async {
+    final response = await _client.get(
+        Uri.parse('https://rickandmortyapi.com/api/character/$personajesId'));
+    if (response.statusCode == 200) {
+      return Result.fromJson(response.body);
+    } else {
+      throw Exception('Failed to load personaje details');
+    }
   }
 }

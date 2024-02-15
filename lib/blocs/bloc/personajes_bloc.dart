@@ -9,27 +9,22 @@ part 'personajes_state.dart';
 
 class PersonajesBloc extends Bloc<PersonajesEvent, PersonajesState> {
   final PersonajeRepositori personajeRepositori;
+
   PersonajesBloc(this.personajeRepositori) : super(PersonajesInitial()) {
-    on<PersonajeFetchList>(_onPersonajesFetchPopular);
+    on<PersonajeFetchList>(_onPersonajesFetchList);
+    on<PersonajeFetchEvents>(_onPersonajeFetchEvents);
   }
-  void _onPersonajesFetchPopular(
+
+  void _onPersonajesFetchList(
       PersonajeFetchList event, Emitter<PersonajesState> emit) async {
     try {
       final personajesList = await personajeRepositori.fetchPersonajes();
       emit(PersonajesFeatchSucces(personajesList));
-      return;
-    } on Exception catch (e) {
+    } catch (e) {
       emit(PersonajesFetchError(e.toString()));
     }
   }
 
-  void _onPersonajeClick(
-      PersonajeDetalles event, Emitter<PersonajesState> emit) {
-    try {
-      emit(PersonajeDetallesClick(event.personajeId));
-      return;
-    } on Exception catch (e) {
-      emit(PersonajesFetchError(e.toString()));
-    }
-  }
+  void _onPersonajeFetchEvents(
+      PersonajeFetchEvents event, Emitter<PersonajesState> emit) {}
 }

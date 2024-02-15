@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:rick_and_morty_flutter_app/blocs/bloc/personaje_details_bloc_bloc.dart';
+import 'package:rick_and_morty_flutter_app/blocs/bloc/personajes_bloc.dart';
+
 import 'package:rick_and_morty_flutter_app/data/services/episodes_service.dart';
+import 'package:rick_and_morty_flutter_app/repositories/personajes_repository.dart';
+import 'package:rick_and_morty_flutter_app/repositories/personajes_reposritory_impl.dart';
 import 'package:rick_and_morty_flutter_app/ui/home_screen.dart';
 
 void main() {
@@ -8,22 +13,36 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: Provider<EpisodeService>(
-        create: (BuildContext context) => EpisodeService.create(),
-        dispose: (_, EpisodeService repository) => repository.client.dispose(),
-        child: const HomeScreen(),
+    return MultiProvider(
+      providers: [
+        Provider<EpisodeService>(
+          create: (BuildContext context) => EpisodeService.create(),
+          dispose: (_, EpisodeService repository) =>
+              repository.client.dispose(),
+        ),
+        Provider<PersonajesRespositoryImpl>(
+          create: (BuildContext context) => PersonajesRespositoryImpl(),
+        ),
+        Provider<PersonajesBloc>(
+          create: (BuildContext context) =>
+              PersonajesBloc(context.read<PersonajesRespositoryImpl>()),
+          dispose: (_, PersonajesBloc bloc) => bloc.close(),
+        ),
+        Provider<PersonajeDetailsBlocBloc>(
+          create: (BuildContext context) => PersonajeDetailsBlocBloc(
+              context.read<PersonajesRespositoryImpl>()),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'My App',
+        home: HomeScreen(),
       ),
     );
   }
 }
+
+class PersonajeRepositoryImpl {}

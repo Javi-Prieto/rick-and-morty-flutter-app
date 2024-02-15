@@ -9,55 +9,52 @@ class PersonajeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: 100,
-        height: 50,
-        child: GestureDetector(
-          onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => CharacterScreenDetails(
-                        personajeId: list.id!,
-                      )),
-            );
-          },
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: Column(
-                children: [
-                  Center(
-                      child: Image(
-                    image: NetworkImage(list.image!),
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => CharacterScreenDetails(
+                    personajeId: list.id!,
                   )),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(list.location!.name!),
-                      Text(list.gender!),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(Radius.circular(15)),
-                            color: Color.fromARGB(255, 55, 201, 140)),
-                        width: 350,
-                        height: 100,
-                        alignment: Alignment.center,
-                        child: Center(
-                          child: Text(list.name!, textAlign: TextAlign.center),
-                        ),
-                      ),
-                    ],
-                  )
+        );
+      },
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Column(
+            children: [
+              Center(
+                  child: Image(
+                image: NetworkImage(list.image!),
+              )),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(list.location!.name!),
+                  Text(list.gender!),
                 ],
               ),
-            ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    decoration: const BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15)),
+                        color: Color.fromARGB(255, 55, 201, 140)),
+                    width: 350,
+                    height: 100,
+                    alignment: Alignment.center,
+                    child: Center(
+                      child: Text(list.name!, textAlign: TextAlign.center),
+                    ),
+                  ),
+                ],
+              )
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
